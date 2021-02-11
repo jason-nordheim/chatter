@@ -27,7 +27,6 @@ export const TheirMessage = ({ message, lastMessage }) => {
                         </div>
                     )
             }
-    }
         </div >
     );
 };
