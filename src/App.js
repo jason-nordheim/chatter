@@ -1,28 +1,35 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { ChatEngine } from "react-chat-engine";
 import "./App.css";
-import ChatFeed from "./components/ChatFeed";
 import LoginForm from "./components/LoginForm";
+import { ChatFeed } from "./components/ChatFeed";
 import {
   projectID,
-  isAuthenticated,
-  authenticatedUser,
+  getCredentials,
+  clearCredentials,
 } from "./util/ChatEngineUtils";
 
 const App = () => {
-  if (!isAuthenticated()) return <LoginForm />;
-  else {
-    const { username, password } = authenticatedUser();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    try {
+      setUser(getCredentials());
+    } catch (err) {}
+    return setTimeout(() => clearCredentials(), 1000);
+  }, []);
+
+  if (user && user.username && user.password)
     return (
       <ChatEngine
         height="100vh"
         projectID={projectID}
-        userName={username} // admin user
-        userSecret={password} /// admin password
+        userName={user.username} // admin user
+        userSecret={user.password} /// admin password
         renderChatFeed={(chatAppProps) => <ChatFeed {...chatAppProps} />}
       />
     );
-  }
+  else return <LoginForm />;
 };
 
 export default App;
