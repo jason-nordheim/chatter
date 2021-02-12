@@ -5,7 +5,7 @@ import { authObject, projectID, setAuthenticated } from "../util/ChatEngineUtils
 
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
-    const [password, setPasswod] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ export const LoginForm = () => {
                         className="input"
                         placeholder="Password"
                         value={password}
-                        onChange={e => setPasswod(e.target.value)}
+                        onChange={e => setPassword(e.target.value)}
                         required
                     />
                     <div align="center">
