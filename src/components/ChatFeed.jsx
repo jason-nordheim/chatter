@@ -3,11 +3,25 @@ import { MessageForm } from "./MessageForm";
 import MyMessage from "./MyMessage";
 import TheirMessage from "./TheirMessage";
 
-const ChatFeed = (props) => {
+export const ChatFeed = (props) => {
     const { chats, activeChat, userName, messages } = props;
 
 
     const chat = chats && chats[activeChat];
+
+    const renderReadReciepts = (message, isMyMessage) => {
+        return chat.people.map((person, index) => {
+            return person.last_read === message.id && (
+                <div key={`read_${index}`}
+                    className="read-reciept"
+                    style={{
+                        float: isMyMessage ? 'right' : 'left',
+                        backgroundImage: `url(${person?.person?.avatar})`
+                    }}
+                />
+            );
+        });
+    };
 
 
     const renderMessages = () => {
@@ -32,7 +46,7 @@ const ChatFeed = (props) => {
                             marginRight: isMyMessage ? '18px' : '0px',
                             marginLeft: isMyMessage ? '0px' : '68px'
                         }}>
-                        read-reciepts
+                        {renderReadReciepts(message, isMyMessage)}
                     </div>
                 </div>
             );
