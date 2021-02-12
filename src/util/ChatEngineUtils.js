@@ -1,3 +1,6 @@
+const usernameStr = "username";
+const passwordStr = "password";
+
 export const isImage = (message) =>
   message &&
   message.attachments &&
@@ -16,19 +19,26 @@ export const authObject = (username, password, projectId = projectID) => {
 };
 
 export const setAuthenticated = (username, password) => {
-  localStorage.setItem("username", username);
-  localStorage.setItem("password", password);
+  localStorage.setItem(usernameStr, username);
+  localStorage.setItem(passwordStr, password);
+};
+
+export const logout = () => {
+  localStorage.removeItem(usernameStr);
+  localStorage.removeItem(passwordStr);
 };
 
 export const isAuthenticated = () => {
-  if (!localStorage.getItem("username")) return false;
-  else if (!localStorage.getItem("password")) return false;
+  if (!localStorage.getItem(usernameStr)) return false;
+  else if (!localStorage.getItem(passwordStr)) return false;
   else return true;
 };
 
 export const authenticatedUser = () => {
-  return {
-    username: localStorage.getItem("username"),
-    password: localStorage.getItem("password"),
-  };
+  if (isAuthenticated()) {
+    return {
+      username: localStorage.getItem(usernameStr),
+      password: localStorage.getItem(passwordStr),
+    };
+  } else throw new Error("No user authenticated");
 };
