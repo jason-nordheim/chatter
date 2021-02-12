@@ -6,7 +6,6 @@ import TheirMessage from "./TheirMessage";
 export const ChatFeed = (props) => {
     const { chats, activeChat, userName, messages } = props;
 
-
     const chat = chats && chats[activeChat];
 
     const renderReadReceipts = (message, isMyMessage) => {
