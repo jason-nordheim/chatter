@@ -23,9 +23,8 @@ export const setAuthenticated = (username, password) => {
   localStorage.setItem(passwordStr, password);
 };
 
-export const logout = () => {
-  localStorage.removeItem(usernameStr);
-  localStorage.removeItem(passwordStr);
+export const clearCredentials = () => {
+  localStorage.clear();
 };
 
 export const isAuthenticated = () => {
@@ -34,7 +33,7 @@ export const isAuthenticated = () => {
   else return true;
 };
 
-export const authenticatedUser = () => {
+export const getCredentials = () => {
   if (isAuthenticated()) {
     return {
       username: localStorage.getItem(usernameStr),
