@@ -6,24 +6,27 @@ import { authObject, projectID, setAuthenticated } from "../util/ChatEngineUtils
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginDisabled, setLoginDisabled] = useState(false);
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const authObj = authObject(username, password);
+        setLoginDisabled(true);
 
         try {
             // send username & password to ChatEngine
-            const options = { headers: authObj };
-            const res = await axios.get('https://api.chatengine.io/chats', options);
+            const options = { headers: authObject(username, password) };
+            await axios.get('https://api.chatengine.io/chats', options);
             // (SUCCESS) = Returns messages for user => login 
             setAuthenticated(username, password);
             window.location.reload();
-        } catch (error) {
+        } catch (authError) {
             // (UNSUCCESSFUL) = No Messages returned => error: try again 
-
+            setError('Oops, those credentials aren\'t quite right...');
         }
 
+        setLoginDisabled(false);
     };
 
     return (
@@ -46,10 +49,11 @@ export const LoginForm = () => {
                         required
                     />
                     <div align="center">
-                        <button type="submit" className="button">
+                        <button type="submit" className="button" disabled={loginDisabled}>
                             <span>Login</span>
                         </button>
                     </div>
+                    {error && <h2 className="error">{error}</h2>}
                 </form>
             </div>
         </div>
