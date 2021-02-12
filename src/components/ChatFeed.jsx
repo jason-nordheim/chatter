@@ -9,7 +9,7 @@ export const ChatFeed = (props) => {
 
     const chat = chats && chats[activeChat];
 
-    const renderReadReciepts = (message, isMyMessage) => {
+    const renderReadReceipts = (message, isMyMessage) => {
         return chat.people.map((person, index) => {
             return person.last_read === message.id && (
                 <div key={`read_${index}`}
@@ -46,7 +46,7 @@ export const ChatFeed = (props) => {
                             marginRight: isMyMessage ? '18px' : '0px',
                             marginLeft: isMyMessage ? '0px' : '68px'
                         }}>
-                        {renderReadReciepts(message, isMyMessage)}
+                        {renderReadReceipts(message, isMyMessage)}
                     </div>
                 </div>
             );
