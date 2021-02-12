@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { sendMessage, isTyping } from 'react-chat-engine';
 import { SendOutlined, PictureOutlined } from '@ant-design/icons';
 
-// import { isTyping } from 'react-chat-engine';
-
-// const authObject = {'Project-ID': '0000-00-00-0000', 'User-Name': 'adam', 'User-Secret': 'pass1234'}
-// const chatID = 1
-// const username = 'adam'
-
-// isTyping(authObject, chatID, username)
-
 export const MessageForm = (props) => {
-    const { activeChat, creds, chatId } = props;
+    const delay = 1000;
+    const { activeChat, creds, chatId, userName } = props;
     const [value, setValue] = useState('');
-    const authObject = { 'Project-ID': '', 'User-Name': '', 'User-Secret': '' };
+    const [typing, setTyping] = useState(false);
+    const [shouldUpdateTypingStatus, setShouldUpdateTypingStatus] = useState(true);
 
-    console.log(creds, chatId);
-
+    useEffect(() => {
+        if (typing && shouldUpdateTypingStatus) {
+            setShouldUpdateTypingStatus(false);
+            isTyping({ ...props }, activeChat, userName);
+            setTimeout(() => setShouldUpdateTypingStatus(true), delay);
+        }
+    }, [props, shouldUpdateTypingStatus, typing, activeChat, userName]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,15 +28,8 @@ export const MessageForm = (props) => {
 
     const handleChange = (e) => {
         setValue(e.target.value);
-        let sendTyping = true;
-        if (sendTyping) {
-            isTyping({ ...props, activeChat }, activeChat);
-            sendTyping = false;
-            setTimeout(() => {
-                sendTyping = true;
-            }, 250);
-        }
-
+        setTyping(true);
+        setTimeout(() => setTyping(false), delay);
     };
 
     const handleUpload = (e) => {
@@ -74,3 +66,5 @@ export const MessageForm = (props) => {
         </form>
     );
 };;
+
+export default MessageForm;
