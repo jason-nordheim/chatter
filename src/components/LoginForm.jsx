@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import axios from 'axios';
-import { authObject, projectID, setAuthenticated } from "../util/ChatEngineUtils";
+import { authObject, setAuthenticated } from "../util/ChatEngineUtils";
+import { APP_NAME } from "../config";
 
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -32,7 +33,7 @@ export const LoginForm = () => {
     return (
         <div className="wrapper">
             <div className="form">
-                <h1 className="title">Chatter</h1>
+                <h1 className="title">Login in to {APP_NAME}</h1>
                 <form onSubmit={handleSubmit}>
                     <input type="text"
                         className="input"
