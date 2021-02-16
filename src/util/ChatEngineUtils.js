@@ -1,5 +1,6 @@
 const usernameStr = "username";
 const passwordStr = "password";
+export const projectID = "1ddc2650-e4a3-49b2-a059-2d9efac5bfb2";
 
 export const isImage = (message) =>
   message &&
@@ -7,8 +8,6 @@ export const isImage = (message) =>
   message.attachments?.length > 0 &&
   message.attachments[0] &&
   message.attachments[0].file;
-
-export const projectID = "1ddc2650-e4a3-49b2-a059-2d9efac5bfb2";
 
 export const authObject = (username, password, projectId = projectID) => {
   return {
